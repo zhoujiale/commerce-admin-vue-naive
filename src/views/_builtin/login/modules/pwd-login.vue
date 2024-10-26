@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue';
 import { $t } from '@/locales';
-import { loginModuleRecord } from '@/constants/app';
 import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { useAuthStore } from '@/store/modules/auth';
@@ -49,26 +48,6 @@ interface Account {
   password: string;
 }
 
-const accounts = computed<Account[]>(() => [
-  {
-    key: 'super',
-    label: $t('page.login.pwdLogin.superAdmin'),
-    userName: 'Super',
-    password: '123456'
-  },
-  {
-    key: 'admin',
-    label: $t('page.login.pwdLogin.admin'),
-    userName: 'Admin',
-    password: '123456'
-  },
-  {
-    key: 'user',
-    label: $t('page.login.pwdLogin.user'),
-    userName: 'User',
-    password: '123456'
-  }
-]);
 
 async function handleAccountLogin(account: Account) {
   await authStore.login(account.userName, account.password);

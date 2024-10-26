@@ -5,6 +5,7 @@ import { loginModuleRecord } from '@/constants/app';
 import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { useAuthStore } from '@/store/modules/auth';
+import { md5Encode } from "@/utils/md5";
 
 defineOptions({
   name: 'PwdLogin'
@@ -15,13 +16,13 @@ const { toggleLoginModule } = useRouterPush();
 const { formRef, validate } = useNaiveForm();
 
 interface FormModel {
-  userName: string;
+  username: string;
   password: string;
 }
 
 const model: FormModel = reactive({
-  userName: 'Soybean',
-  password: '123456'
+  username: '',
+  password: ''
 });
 
 const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
@@ -29,14 +30,14 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
   const { formRules } = useFormRules();
 
   return {
-    userName: formRules.userName,
+    username: formRules.username,
     password: formRules.pwd
   };
 });
 
 async function handleSubmit() {
   await validate();
-  await authStore.login(model.userName, model.password);
+  await authStore.login(model.username, md5Encode(model.password));
 }
 
 type AccountKey = 'super' | 'admin' | 'user';
@@ -77,7 +78,7 @@ async function handleAccountLogin(account: Account) {
 <template>
   <NForm ref="formRef" :model="model" :rules="rules" size="large" :show-label="false" @keyup.enter="handleSubmit">
     <NFormItem path="userName">
-      <NInput v-model:value="model.userName" :placeholder="$t('page.login.common.userNamePlaceholder')" />
+      <NInput v-model:value="model.username" :placeholder="$t('page.login.common.userNamePlaceholder')" />
     </NFormItem>
     <NFormItem path="password">
       <NInput
@@ -97,20 +98,20 @@ async function handleAccountLogin(account: Account) {
       <NButton type="primary" size="large" round block :loading="authStore.loginLoading" @click="handleSubmit">
         {{ $t('common.confirm') }}
       </NButton>
-      <div class="flex-y-center justify-between gap-12px">
+      <!-- <div class="flex-y-center justify-between gap-12px">
         <NButton class="flex-1" block @click="toggleLoginModule('code-login')">
           {{ $t(loginModuleRecord['code-login']) }}
         </NButton>
         <NButton class="flex-1" block @click="toggleLoginModule('register')">
           {{ $t(loginModuleRecord.register) }}
         </NButton>
-      </div>
-      <NDivider class="text-14px text-#666 !m-0">{{ $t('page.login.pwdLogin.otherAccountLogin') }}</NDivider>
+      </div> -->
+      <!-- <NDivider class="text-14px text-#666 !m-0">{{ $t('page.login.pwdLogin.otherAccountLogin') }}</NDivider>
       <div class="flex-center gap-12px">
         <NButton v-for="item in accounts" :key="item.key" type="primary" @click="handleAccountLogin(item)">
           {{ item.label }}
         </NButton>
-      </div>
+      </div> -->
     </NSpace>
   </NForm>
 </template>

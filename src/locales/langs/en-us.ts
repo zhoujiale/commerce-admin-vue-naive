@@ -240,7 +240,7 @@ const local: App.I18n.Schema = {
   },
   form: {
     required: 'Cannot be empty',
-    userName: {
+    username: {
       required: 'Please enter user name',
       invalid: 'User name format is incorrect'
     },

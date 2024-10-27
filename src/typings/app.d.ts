@@ -474,6 +474,21 @@ declare namespace App {
           };
           creativity: string;
         };
+        manage: {
+          department: {
+            title: string;
+            departmentName: string;
+            parentId: string;
+            remark: string;
+            form: {
+              departmentName: string;
+              parentId: string;
+              remark: string;
+            };
+            addDepartment: string;
+            editDepartment: string;
+          };
+        };
       };
       form: {
         required: string;

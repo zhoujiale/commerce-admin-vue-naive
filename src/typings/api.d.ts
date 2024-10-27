@@ -60,10 +60,12 @@ declare namespace Api {
     }
 
     interface UserInfo {
-      userId: string;
-      userName: string;
+      id: string;
+      username: string;
       roles: string[];
-      buttons: string[];
+      permissions: string[];
+      departmentId: string;
+      departmentName: string;
     }
   }
 
@@ -83,5 +85,25 @@ declare namespace Api {
       routes: MenuRoute[];
       home: import('@elegant-router/types').LastLevelRouteKey;
     }
+  }
+
+  /** 系统管理 */
+  namespace SystemManage {
+    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
+
+    type Department = Common.CommonRecord<{
+      id: number;
+      departmentName: string;
+      parentId: number;
+      remark: string;
+      children: Array<Department>;
+    }>;
+    type DepartmentSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.Department, 'id' | 'departmentName'> & CommonSearchParams
+    >;
+
+    type DepartmentPage = Common.PaginatingQueryRecord<Department>;
+
+    type DepartmentList = Array<Department>;
   }
 }

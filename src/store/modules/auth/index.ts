@@ -21,10 +21,12 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const token = ref(getToken());
 
   const userInfo: Api.Auth.UserInfo = reactive({
-    userId: '',
-    userName: '',
+    id: '',
+    username: '',
     roles: [],
-    buttons: []
+    permissions: [],
+    departmentId: '',
+    departmentName: ''
   });
 
   /** is super role in static route */
@@ -64,7 +66,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     startLoading();
 
     const { data: loginToken, error } = await fetchLogin(username, password);
-    console.log(error)
     if (!error) {
       const pass = await loginByToken(loginToken);
 
@@ -76,7 +77,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
         if (routeStore.isInitAuthRoute) {
           window.$notification?.success({
             title: $t('page.login.common.loginSuccess'),
-            content: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
+            content: $t('page.login.common.welcomeBack', { userName: userInfo.username }),
             duration: 4500
           });
         }
@@ -91,7 +92,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   async function loginByToken(loginToken: Api.Auth.LoginToken) {
     // 1. stored in the localStorage, the later requests need it in headers
     localStg.set('token', loginToken.token);
-    localStg.set('refreshToken', loginToken.refreshToken);
+    localStg.set('refreshToken', loginToken.refreshToken ?? '');
 
     // 2. get user info
     const pass = await getUserInfo();

@@ -159,7 +159,9 @@ const local: App.I18n.Schema = {
     404: '页面不存在',
     500: '服务器错误',
     'iframe-page': '外链页面',
-    home: '首页'
+    home: '首页',
+    manage: '系统管理',
+    manage_department: '部门管理'
   },
   page: {
     login: {
@@ -236,6 +238,21 @@ const local: App.I18n.Schema = {
         desc5: 'Soybean 刚才把工作台页面随便写了一些，凑合能看了！'
       },
       creativity: '创意'
+    },
+    manage: {
+      department: {
+        title: '部门列表',
+        departmentName: '部门名称',
+        parentId: '父级部门',
+        remark: '备注',
+        form: {
+          departmentName: '请输入部门名称',
+          parentId: '请选择父级部门',
+          remark: '请输入备注'
+        },
+        addDepartment: '添加部门',
+        editDepartment: '编辑部门'
+      }
     }
   },
   form: {

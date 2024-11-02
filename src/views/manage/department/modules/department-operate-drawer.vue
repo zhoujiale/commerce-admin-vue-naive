@@ -4,7 +4,7 @@ import type { TreeSelectOption } from 'naive-ui';
 import { NTreeSelect } from 'naive-ui';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
-import { getAllDepartmentList } from '@/service/api';
+import { addDepartment, getAllDepartmentList, updateDepartment } from '@/service/api';
 import { convertToTreeSelectFormat } from './departmentUtil';
 
 defineOptions({
@@ -36,19 +36,20 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Pick<Api.SystemManage.Department, 'departmentName' | 'remark' | 'parentId'>;
+type Model = Pick<Api.SystemManage.Department, 'departmentName' | 'remark' | 'parentId' | 'id'>;
 
 const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
+    id: 0,
     departmentName: '',
     remark: '',
     parentId: 0
   };
 }
 
-type RuleKey = Exclude<keyof Model, 'remark' | 'parentId'>;
+type RuleKey = Exclude<keyof Model, 'remark' | 'parentId' | 'id'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   departmentName: defaultRequiredRule
@@ -73,8 +74,13 @@ function handleInitModel() {
 
 async function handleSubmit() {
   await validate();
-  // request
-  window.$message?.success($t('common.updateSuccess'));
+  if (props.operateType === 'edit' && props.rowData) {
+    await updateDepartment(model.id, model);
+    window.$message?.success($t('common.updateSuccess'));
+  } else {
+    await addDepartment(model);
+    window.$message?.success($t('common.addSuccess'));
+  }
   closeDrawer();
   emit('submitted');
 }
@@ -103,7 +109,7 @@ watch(visible, () => {
           />
         </NFormItem>
         <NFormItem :label="$t('page.manage.department.parentId')" path="parentId">
-          <NTreeSelect :default-value="0" :options="options" clearable />
+          <NTreeSelect v-model:value="model.parentId" :default-value="0" :options="options" clearable />
         </NFormItem>
         <NFormItem :label="$t('page.manage.department.remark')" path="remark">
           <NInput v-model:value="model.remark" :placeholder="$t('page.manage.department.form.remark')" />

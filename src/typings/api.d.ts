@@ -96,7 +96,7 @@ declare namespace Api {
       departmentName: string;
       parentId: number;
       remark: string;
-      children: Array<Department>;
+      children?: Array<Department>;
     }>;
     type DepartmentSearchParams = CommonType.RecordNullable<
       Pick<Api.SystemManage.Department, 'id' | 'departmentName'> & CommonSearchParams

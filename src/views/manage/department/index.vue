@@ -2,7 +2,7 @@
 import { NButton, NPopconfirm } from 'naive-ui';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
-import { fetchGetDepartmentList } from '@/service/api';
+import { deleteDapartment, fetchGetDepartmentList } from '@/service/api';
 import { $t } from '@/locales';
 import DepartmentSearch from './modules/department-search.vue';
 import DepartmentDrawer from './modules/department-operate-drawer.vue';
@@ -95,10 +95,9 @@ async function handleBatchDelete() {
   onBatchDeleted();
 }
 
-function handleDelete(id: number) {
+async function handleDelete(id: number) {
   // request
-  console.log(id);
-
+  await deleteDapartment(id);
   onDeleted();
 }
 

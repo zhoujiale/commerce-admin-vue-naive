@@ -105,5 +105,41 @@ declare namespace Api {
     type DepartmentPage = Common.PaginatingQueryRecord<Department>;
 
     type DepartmentList = Array<Department>;
+
+    /**
+     * - "1" : 目录
+     * - "2": 菜单
+     * - "3": 按钮
+     */
+    type MenuType = '1' | '2' | '3';
+
+    /**
+     * icon type
+     *
+     * - "1": iconify icon
+     * - "2": local icon
+     */
+    type IconType = '1' | '2';
+
+    type Menu = Common.CommonRecord<{
+      id: number;
+      menuName: string;
+      menuType: MenuType;
+      parentId: number;
+      icon: string;
+      route: string;
+      sortNumber: number;
+      permissions: string[];
+      isHide: boolean;
+      children: Array<Menu>;
+    }>;
+
+    type MenuSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.Menu, 'id' | 'menuName'> & CommonSearchParams
+    >;
+
+    type MenuPage = Common.PaginatingQueryRecord<Menu>;
+
+    type MenuList = Array<Menu>;
   }
 }

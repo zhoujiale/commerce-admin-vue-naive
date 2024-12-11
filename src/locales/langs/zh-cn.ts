@@ -161,7 +161,8 @@ const local: App.I18n.Schema = {
     'iframe-page': '外链页面',
     home: '首页',
     manage: '系统管理',
-    manage_department: '部门管理'
+    manage_department: '部门管理',
+    manage_menu: '菜单管理'
   },
   page: {
     login: {
@@ -252,6 +253,36 @@ const local: App.I18n.Schema = {
         },
         addDepartment: '添加部门',
         editDepartment: '编辑部门'
+      },
+      menu: {
+        id: '菜单ID',
+        title: '菜单管理',
+        addMenu: '新增菜单',
+        addChildMenu: '新增子菜单',
+        editMenu: '编辑菜单',
+        menuName: '菜单名称',
+        menuType: '菜单类型',
+        icon: '图标',
+        route: '路由',
+        sortNumber: '序号',
+        isHide: '是否隐藏',
+        parentId: '父级菜单',
+        permissions: '权限 {index}',
+        form: {
+          menuName: '请输入菜单名称',
+          menuType: '请选择菜单类型',
+          icon: '请选择图标',
+          route: '请输入路由',
+          sortNumber: '请输入序号',
+          isHide: '请选择是否隐藏',
+          parentId: '请选择父级菜单ID',
+          permissions: '请输入权限路由'
+        },
+        type: {
+          directory: '目录',
+          menu: '菜单',
+          button: '按钮'
+        }
       }
     }
   },

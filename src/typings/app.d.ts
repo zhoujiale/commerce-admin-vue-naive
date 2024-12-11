@@ -488,6 +488,36 @@ declare namespace App {
             addDepartment: string;
             editDepartment: string;
           };
+          menu: {
+            id: string;
+            title: string;
+            addMenu: string;
+            addChildMenu: string;
+            editMenu: string;
+            menuName: string;
+            menuType: string;
+            icon: string;
+            route: string;
+            sortNumber: string;
+            isHide: string;
+            parentId: string;
+            permissions: string;
+            form: {
+              menuName: string;
+              menuType: string;
+              icon: string;
+              route: string;
+              sortNumber: string;
+              isHide: string;
+              parentId: string;
+              permissions: string;
+            };
+            type: {
+              directory: string;
+              menu: string;
+              button: string;
+            };
+          };
         };
       };
       form: {

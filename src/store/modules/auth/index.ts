@@ -77,7 +77,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
         if (routeStore.isInitAuthRoute) {
           window.$notification?.success({
             title: $t('page.login.common.loginSuccess'),
-            content: $t('page.login.common.welcomeBack', { userName: userInfo.username }),
+            content: $t('page.login.common.welcomeBack', { username: userInfo.username }),
             duration: 4500
           });
         }

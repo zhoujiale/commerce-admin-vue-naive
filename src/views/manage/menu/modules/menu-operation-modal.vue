@@ -193,11 +193,15 @@ function closeDrawer() {
 async function handleSubmit() {
   await validate();
   if (props.operateType === 'edit' && props.rowData) {
-    await editMenu(props.rowData.id, model);
-    window.$message?.success($t('common.updateSuccess'));
+    const editResponse = await editMenu(props.rowData.id, model);
+    if (editResponse.response.data.code === 200) {
+      window.$message?.success($t('common.updateSuccess'));
+    }
   } else {
-    await addMenu(model);
-    window.$message?.success($t('common.addSuccess'));
+    const addResponse = await addMenu(model);
+    if (addResponse.response.data.code === 200) {
+      window.$message?.success($t('common.addSuccess'));
+    }
   }
   closeDrawer();
   emit('submitted');
@@ -260,6 +264,7 @@ watch(visible, () => {
             <NInputNumber
               v-model:value="model.sortNumber"
               class="w-full"
+              :min="0"
               :placeholder="$t('page.manage.menu.form.sortNumber')"
             />
           </NFormItemGi>

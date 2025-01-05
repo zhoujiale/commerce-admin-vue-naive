@@ -46,6 +46,10 @@ declare namespace Api {
       /** record status */
       status: EnableStatus | null;
     } & T;
+
+    type CommonOperation<T = any> = {
+      data: number;
+    } & T;
   }
 
   /**
@@ -141,5 +145,18 @@ declare namespace Api {
     type MenuPage = Common.PaginatingQueryRecord<Menu>;
 
     type MenuList = Array<Menu>;
+
+    type Role = Common.CommonRecord<{
+      id: number;
+      roleName: string;
+      remark: string;
+      menuIdList: Array<number>;
+    }>;
+
+    type RoleSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.Role, 'id' | 'roleName'> & CommonSearchParams
+    >;
+
+    type RolePage = Common.PaginatingQueryRecord<Role>;
   }
 }

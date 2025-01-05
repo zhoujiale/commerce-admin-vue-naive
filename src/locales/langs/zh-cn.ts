@@ -162,7 +162,8 @@ const local: App.I18n.Schema = {
     home: '首页',
     manage: '系统管理',
     manage_department: '部门管理',
-    manage_menu: '菜单管理'
+    manage_menu: '菜单管理',
+    manage_role: '角色管理'
   },
   page: {
     login: {
@@ -282,6 +283,20 @@ const local: App.I18n.Schema = {
           directory: '目录',
           menu: '菜单',
           button: '按钮'
+        }
+      },
+      role: {
+        id: '角色ID',
+        title: '角色管理',
+        roleName: '角色名称',
+        remark: '备注',
+        addRole: '添加角色',
+        editRole: '编辑角色',
+        menuIdList: '权限菜单',
+        form: {
+          roleName: '角色名称',
+          remark: '备注',
+          menuIdList: '权限菜单'
         }
       }
     }

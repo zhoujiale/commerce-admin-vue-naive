@@ -23,4 +23,5 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   home: () => import("@/views/home/index.vue"),
   manage_department: () => import("@/views/manage/department/index.vue"),
   manage_menu: () => import("@/views/manage/menu/index.vue"),
+  manage_role: () => import("@/views/manage/role/index.vue"),
 };

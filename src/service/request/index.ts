@@ -141,7 +141,7 @@ export const demoRequest = createRequest<App.Service.DemoResponse>(
     isBackendSuccess(response) {
       // when the backend response code is "200", it means the request is success
       // you can change this logic by yourself
-      return response.data.status === '200';
+      return response.data.status === 200;
     },
     async onBackendFail(_response) {
       // when the backend response code is not "200", it means the request is fail

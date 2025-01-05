@@ -2,10 +2,10 @@
 import { NButton, NPopconfirm } from 'naive-ui';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
-import { deleteDapartment, fetchGetDepartmentList } from '@/service/api';
 import { $t } from '@/locales';
-import DepartmentSearch from './modules/department-search.vue';
-import DepartmentDrawer from './modules/department-operate-drawer.vue';
+import { deleteRole, fetchGetRoleList } from '@/service/api';
+import RoleSearch from './modules/role-search.vue';
+import RoleDrawer from './modules/role-operation-drawer.vue';
 
 const appStore = useAppStore();
 
@@ -20,13 +20,13 @@ const {
   searchParams,
   resetSearchParams
 } = useTable({
-  apiFn: fetchGetDepartmentList,
+  apiFn: fetchGetRoleList,
   apiParams: {
     current: 1,
     size: 10,
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
-    departmentName: null
+    roleName: null
   },
   columns: () => [
     {
@@ -41,8 +41,8 @@ const {
       align: 'center'
     },
     {
-      key: 'departmentName',
-      title: $t('page.manage.department.departmentName'),
+      key: 'roleName',
+      title: $t('page.manage.role.roleName'),
       align: 'center',
       minWidth: 120
     },
@@ -97,7 +97,7 @@ async function handleBatchDelete() {
 
 async function handleDelete(id: number) {
   // request
-  const deleteResponse = await deleteDapartment(id);
+  const deleteResponse = await deleteRole(id);
   if (deleteResponse.response.data.code === 200) {
     onDeleted();
   }
@@ -110,13 +110,8 @@ function edit(id: number) {
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
-    <DepartmentSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
-    <NCard
-      :title="$t('page.manage.department.title')"
-      :bordered="false"
-      size="small"
-      class="sm:flex-1-hidden card-wrapper"
-    >
+    <RoleSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
+    <NCard :title="$t('page.manage.role.title')" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"
@@ -140,7 +135,7 @@ function edit(id: number) {
         :pagination="mobilePagination"
         class="sm:h-full"
       />
-      <DepartmentDrawer
+      <RoleDrawer
         v-model:visible="drawerVisible"
         :operate-type="operateType"
         :row-data="editingData"

@@ -18,7 +18,7 @@ export function getAllDepartmentList() {
 
 /** 添加部门 */
 export function addDepartment(data: any) {
-  return request<number>({
+  return request<Api.Common.CommonOperation>({
     url: '/department/add',
     method: 'post',
     data
@@ -27,7 +27,7 @@ export function addDepartment(data: any) {
 
 /** 更新部门 */
 export function updateDepartment(id: number, data: any) {
-  return request<number>({
+  return request<Api.Common.CommonOperation>({
     url: `/department/modify/${id}`,
     method: 'put',
     data
@@ -36,7 +36,7 @@ export function updateDepartment(id: number, data: any) {
 
 /** 删除部门 */
 export function deleteDapartment(id: number) {
-  return request<number>({
+  return request<Api.Common.CommonOperation>({
     url: `/department/delete/${id}`,
     method: 'delete'
   });
@@ -61,7 +61,7 @@ export function fetchGetMenuListByType(menuType: number) {
 
 /** 添加菜单 */
 export function addMenu(data: any) {
-  return request<number>({
+  return request<Api.Common.CommonOperation>({
     url: '/systemMenu/add',
     method: 'post',
     data
@@ -70,9 +70,56 @@ export function addMenu(data: any) {
 
 /** 编辑菜单 */
 export function editMenu(id: number, data: any) {
-  return request<number>({
+  return request<Api.Common.CommonOperation>({
     url: `/systemMenu/modify/${id}`,
     method: 'put',
     data
+  });
+}
+
+/** 删除菜单 */
+export function deleteMenu(id: number) {
+  return request<Api.Common.CommonOperation>({
+    url: `/systemMenu/delete/${id}`,
+    method: 'delete'
+  });
+}
+/** 权限菜单树 */
+export function menuTreeList() {
+  return request<Api.SystemManage.MenuList>({
+    url: '/systemMenu/treeList',
+    method: 'get'
+  });
+}
+
+/** 获取角色列表 */
+export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
+  return request<Api.SystemManage.RolePage>({
+    url: '/systemRole/pages',
+    method: 'get',
+    params
+  });
+}
+/** 添加角色 */
+export function addRole(data: any) {
+  return request<Api.Common.CommonOperation>({
+    url: '/systemRole/add',
+    method: 'post',
+    data
+  });
+}
+/** 编辑角色 */
+export function updateRole(id: number, data: any) {
+  return request<Api.Common.CommonOperation>({
+    url: `/systemRole/edit/${id}`,
+    method: 'put',
+    data
+  });
+}
+/** 删除角色 */
+export function deleteRole(id: number) {
+  return request<Api.Common.CommonOperation>({
+    url: `/systemRole/delte/${id}`,
+    method: 'delete'
   });
 }

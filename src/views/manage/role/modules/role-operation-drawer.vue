@@ -1,18 +1,15 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
-import type { TreeSelectOption } from 'naive-ui';
-import { NTreeSelect } from 'naive-ui';
+import { computed, reactive, watch } from 'vue';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
-import { addDepartment, getAllDepartmentList, updateDepartment } from '@/service/api';
-import { convertToTreeSelectFormat } from './departmentUtil';
-
+import { addRole, updateRole } from '@/service/api';
+import MenuTree from '../../menu/modules/menu-tree.vue';
 defineOptions({
-  name: 'DepartmentDrawer'
+  name: 'RoleDrawer'
 });
 interface Props {
   operateType: NaiveUI.TableOperateType;
-  rowData?: Api.SystemManage.Department | null;
+  rowData?: Api.SystemManage.Role | null;
 }
 const props = defineProps<Props>();
 
@@ -30,38 +27,29 @@ const { formRef, validate, restoreValidation } = useNaiveForm();
 const { defaultRequiredRule } = useFormRules();
 const title = computed(() => {
   const titles: Record<NaiveUI.TableOperateType, string> = {
-    add: $t('page.manage.department.addDepartment'),
-    edit: $t('page.manage.department.editDepartment')
+    add: $t('page.manage.role.addRole'),
+    edit: $t('page.manage.role.editRole')
   };
   return titles[props.operateType];
 });
 
-type Model = Pick<Api.SystemManage.Department, 'departmentName' | 'remark' | 'parentId' | 'id'>;
+type Model = Pick<Api.SystemManage.Role, 'roleName' | 'remark' | 'id' | 'menuIdList'>;
 
 const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
     id: 0,
-    departmentName: '',
+    roleName: '',
     remark: '',
-    parentId: 0
+    menuIdList: []
   };
 }
 
-type RuleKey = Exclude<keyof Model, 'remark' | 'parentId' | 'id'>;
+type RuleKey = Exclude<keyof Model, 'remark' | 'roleName' | 'id' | 'menuIdList'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
-  departmentName: defaultRequiredRule
-};
-
-const options = ref<TreeSelectOption[]>([]);
-
-const fetchAllDepartmentData = async () => {
-  const response = await getAllDepartmentList();
-  if (response.data !== null) {
-    options.value = convertToTreeSelectFormat(response.data);
-  }
+  roleName: defaultRequiredRule
 };
 
 function handleInitModel() {
@@ -72,15 +60,19 @@ function handleInitModel() {
   }
 }
 
+function handleMenuIdList(data: Array<number>) {
+  model.menuIdList = data;
+}
+
 async function handleSubmit() {
   await validate();
   if (props.operateType === 'edit' && props.rowData) {
-    const editResponse = await updateDepartment(model.id, model);
+    const editResponse = await updateRole(model.id, model);
     if (editResponse.response.data.code === 200) {
       window.$message?.success($t('common.updateSuccess'));
     }
   } else {
-    const addResponse = await addDepartment(model);
+    const addResponse = await addRole(model);
     if (addResponse.response.data.code === 200) {
       window.$message?.success($t('common.addSuccess'));
     }
@@ -97,7 +89,6 @@ watch(visible, () => {
   if (visible.value) {
     handleInitModel();
     restoreValidation();
-    fetchAllDepartmentData();
   }
 });
 </script>
@@ -106,17 +97,14 @@ watch(visible, () => {
   <NDrawer v-model:show="visible" display-directive="show" :width="360">
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
-        <NFormItem :label="$t('page.manage.department.departmentName')" path="departmentName">
-          <NInput
-            v-model:value="model.departmentName"
-            :placeholder="$t('page.manage.department.form.departmentName')"
-          />
+        <NFormItem :label="$t('page.manage.role.roleName')" path="roleName">
+          <NInput v-model:value="model.roleName" :placeholder="$t('page.manage.role.form.roleName')" />
         </NFormItem>
-        <NFormItem :label="$t('page.manage.department.parentId')" path="parentId">
-          <NTreeSelect v-model:value="model.parentId" :default-value="0" :options="options" clearable />
+        <NFormItem :label="$t('page.manage.role.remark')" path="remark">
+          <NInput v-model:value="model.remark" :placeholder="$t('page.manage.role.form.remark')" />
         </NFormItem>
-        <NFormItem :label="$t('page.manage.department.remark')" path="remark">
-          <NInput v-model:value="model.remark" :placeholder="$t('page.manage.department.form.remark')" />
+        <NFormItem :label="$t('page.manage.role.menuIdList')" path="menuIdList">
+          <MenuTree v-model="model.menuIdList" @get-menu-id-list="handleMenuIdList" />
         </NFormItem>
       </NForm>
       <template #footer>

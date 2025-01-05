@@ -4,6 +4,7 @@
 // Read more: https://github.com/soybeanjs/elegant-router
 
 import type { GeneratedRoute } from '@elegant-router/types';
+import path from 'node:path';
 
 export const generatedRoutes: GeneratedRoute[] = [
   {
@@ -100,6 +101,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'manage_menu',
           i18nKey: 'route.manage_menu'
+        }
+      },
+      {
+        name: 'manage_role',
+        path: '/manage/role',
+        component: 'view.manage_role',
+        meta: {
+          title: 'manage_role',
+          i18nKey: 'route.manage_role'
         }
       }
     ]

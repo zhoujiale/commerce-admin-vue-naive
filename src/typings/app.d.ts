@@ -518,6 +518,20 @@ declare namespace App {
               button: string;
             };
           };
+          role: {
+            id: string;
+            title: string;
+            roleName: string;
+            remark: string;
+            menuIdList: string;
+            form: {
+              roleName: string;
+              menuIdList: string;
+              remark: string;
+            };
+            addRole: string;
+            editRole: string;
+          };
         };
       };
       form: {
@@ -599,7 +613,7 @@ declare namespace App {
     /** The backend service response data */
     type Response<T = unknown> = {
       /** The backend service response code */
-      code: string;
+      code: number;
       /** The backend service response message */
       msg: string;
       /** The backend service response data */
@@ -609,7 +623,7 @@ declare namespace App {
     /** The demo backend service response data */
     type DemoResponse<T = unknown> = {
       /** The backend service response code */
-      status: string;
+      status: number;
       /** The backend service response message */
       message: string;
       /** The backend service response data */

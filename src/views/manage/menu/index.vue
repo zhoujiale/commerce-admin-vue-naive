@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
-import { fetchGetMenuList } from '@/service/api/system-manage';
+import { deleteMenu, fetchGetMenuList } from '@/service/api/system-manage';
 import { useBoolean } from '~/packages/hooks/src';
 import { $t } from '@/locales';
 import { menuTypeRecord } from '@/constants/business';
@@ -144,11 +144,14 @@ async function handleBatchDelete() {
   onBatchDeleted();
 }
 
-function handleDelete(id: number) {
+async function handleDelete(id: number) {
   // request
   console.log(id);
-
-  onDeleted();
+  const deleteResonse = await deleteMenu(id);
+  console.log(deleteResonse.response.data.code);
+  if (deleteResonse.response.data.code === 200) {
+    onDeleted();
+  }
 }
 
 const editingData: Ref<Api.SystemManage.Menu | null> = ref(null);

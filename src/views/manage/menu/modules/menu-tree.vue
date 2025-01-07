@@ -7,19 +7,26 @@ import { convertToTreeSelectFormat } from './menuUtil';
 defineOptions({
   name: 'MenuTree'
 });
+const props = withDefaults(
+  defineProps<{
+    checkedMenuIdList?: Array<number>;
+  }>(),
+  {
+    checkedMenuIdList: () => []
+  }
+);
 const menuTree = ref<TreeOption[]>([]);
 const defaultExpandedKeys = ref<number[]>([]);
 const emit = defineEmits(['getMenuIdList']);
+
 async function fetchMenuTreeList() {
   const treeResponse = await menuTreeList();
   if (treeResponse.error === null) {
     const data = treeResponse.data;
-    console.log(data);
     data.forEach((value, _index, _array) => {
       defaultExpandedKeys.value.push(value.id);
     });
     menuTree.value = convertToTreeSelectFormat(data);
-    console.log(menuTree.value);
   }
 }
 function updateCheckedKeys(keys: Array<number>) {
@@ -40,6 +47,7 @@ onMounted(() => {
     :expand-on-click="true"
     :data="menuTree"
     :default-expanded-keys="defaultExpandedKeys"
+    :checked-keys="checkedMenuIdList"
     @update:checked-keys="updateCheckedKeys"
   />
 </template>

@@ -2,7 +2,7 @@
 import { computed, reactive, watch } from 'vue';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
-import { addRole, updateRole } from '@/service/api';
+import { addRole, getRole, updateRole } from '@/service/api';
 import MenuTree from '../../menu/modules/menu-tree.vue';
 defineOptions({
   name: 'RoleDrawer'
@@ -52,11 +52,12 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
   roleName: defaultRequiredRule
 };
 
-function handleInitModel() {
+async function handleInitModel() {
   Object.assign(model, createDefaultModel());
 
   if (props.operateType === 'edit' && props.rowData) {
-    Object.assign(model, props.rowData);
+    const roleResponse = await getRole(props.rowData.id);
+    Object.assign(model, roleResponse.data);
   }
 }
 
@@ -104,7 +105,11 @@ watch(visible, () => {
           <NInput v-model:value="model.remark" :placeholder="$t('page.manage.role.form.remark')" />
         </NFormItem>
         <NFormItem :label="$t('page.manage.role.menuIdList')" path="menuIdList">
-          <MenuTree v-model="model.menuIdList" @get-menu-id-list="handleMenuIdList" />
+          <MenuTree
+            v-model="model.menuIdList"
+            :checked-menu-id-list="model.menuIdList"
+            @get-menu-id-list="handleMenuIdList"
+          />
         </NFormItem>
       </NForm>
       <template #footer>

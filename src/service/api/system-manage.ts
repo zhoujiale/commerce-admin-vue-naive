@@ -111,15 +111,22 @@ export function addRole(data: any) {
 /** 编辑角色 */
 export function updateRole(id: number, data: any) {
   return request<Api.Common.CommonOperation>({
-    url: `/systemRole/edit/${id}`,
+    url: `/systemRole/modify/${id}`,
     method: 'put',
     data
+  });
+}
+/** 获取角色 */
+export function getRole(id: number) {
+  return request<Api.SystemManage.Role>({
+    url: `/systemRole/info/${id}`,
+    method: 'get'
   });
 }
 /** 删除角色 */
 export function deleteRole(id: number) {
   return request<Api.Common.CommonOperation>({
-    url: `/systemRole/delte/${id}`,
+    url: `/systemRole/delete/${id}`,
     method: 'delete'
   });
 }

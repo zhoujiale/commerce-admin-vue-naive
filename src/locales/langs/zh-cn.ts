@@ -47,6 +47,10 @@ const local: App.I18n.Schema = {
     yesOrNo: {
       yes: '是',
       no: '否'
+    },
+    commonStatus: {
+      normal: '正常',
+      forbidden: '禁用'
     }
   },
   request: {
@@ -163,7 +167,8 @@ const local: App.I18n.Schema = {
     manage: '系统管理',
     manage_department: '部门管理',
     manage_menu: '菜单管理',
-    manage_role: '角色管理'
+    manage_role: '角色管理',
+    manage_user: '用户管理'
   },
   page: {
     login: {
@@ -297,6 +302,39 @@ const local: App.I18n.Schema = {
           roleName: '角色名称',
           remark: '备注',
           menuIdList: '权限菜单'
+        }
+      },
+      user: {
+        id: '用户ID',
+        title: '用户列表',
+        username: '用户名',
+        realName: '真实姓名',
+        password: '密码',
+        userStatus: '用户状态',
+        contactInfo: '联系方式',
+        roleId: '角色',
+        roleName: '角色名称',
+        departmentId: '部门',
+        departmentName: '部门名称',
+        isAdmin: '总管理员',
+        expireDate: '过期时间',
+        createDate: '创建时间',
+        systemMenuVOList: '菜单列表',
+        permissions: '权限列表',
+        addSystemUser: '添加用户',
+        editSystemUser: '编辑用户',
+        form: {
+          username: '请输入用户名',
+          password: '请输入密码',
+          realName: '请输入真实姓名',
+          userStatus: '请选择用户状态',
+          departmentId: '请选择部门',
+          roleId: '请选择角色',
+          createDate: '请选择时间'
+        },
+        status: {
+          normal: '正常',
+          forbidden: '禁用'
         }
       }
     }

@@ -130,3 +130,46 @@ export function deleteRole(id: number) {
     method: 'delete'
   });
 }
+
+/** 查询系统用户列表 */
+export function fetchGetSystemUserList(params?: Api.SystemManage.SystemUserSearchParams) {
+  return request<Api.SystemManage.SystemUserPage>({
+    url: '/systemUser/pages',
+    method: 'get',
+    params
+  });
+}
+
+/** 获取用户 */
+export function getUser(id: number) {
+  return request<Api.SystemManage.SystemUser>({
+    url: `/systemUser/info/${id}`,
+    method: 'get'
+  });
+}
+
+/** 新增用户 */
+export function addUser(data: any) {
+  return request<Api.Common.CommonOperation>({
+    url: '/systemUser/add',
+    method: 'post',
+    data
+  });
+}
+
+/** 编辑用户 */
+export function updateUser(id: number, data: any) {
+  return request<Api.Common.CommonOperation>({
+    url: `/systemUser/modify/${id}`,
+    method: 'put',
+    data
+  });
+}
+
+/** 删除用户 */
+export function deleteUser(id: number) {
+  return request<Api.Common.CommonOperation>({
+    url: `/systemUser/delete/${id}`,
+    method: 'delete'
+  });
+}

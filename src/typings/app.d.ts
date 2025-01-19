@@ -331,6 +331,10 @@ declare namespace App {
           yes: string;
           no: string;
         };
+        commonStatus: {
+          normal: string;
+          forbidden: string;
+        };
       };
       request: {
         logout: string;
@@ -531,6 +535,39 @@ declare namespace App {
             };
             addRole: string;
             editRole: string;
+          };
+          user: {
+            id: string;
+            title: string;
+            username: string;
+            realName: string;
+            password: string;
+            userStatus: string;
+            contactInfo: string;
+            roleId: string;
+            roleName: string;
+            departmentId: string;
+            departmentName: string;
+            isAdmin: string;
+            expireDate: string;
+            createDate: string;
+            systemMenuVOList: string;
+            permissions: string;
+            addSystemUser: string;
+            editSystemUser: string;
+            form: {
+              username: string;
+              password: string;
+              realName: string;
+              userStatus: string;
+              departmentId: string;
+              roleId: string;
+              createDate: string;
+            };
+            status: {
+              normal: string;
+              forbidden: string;
+            };
           };
         };
       };

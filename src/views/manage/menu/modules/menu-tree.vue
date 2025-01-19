@@ -7,7 +7,7 @@ import { convertToTreeSelectFormat } from './menuUtil';
 defineOptions({
   name: 'MenuTree'
 });
-const props = withDefaults(
+withDefaults(
   defineProps<{
     checkedMenuIdList?: Array<number>;
   }>(),

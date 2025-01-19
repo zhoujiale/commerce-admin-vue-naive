@@ -158,5 +158,39 @@ declare namespace Api {
     >;
 
     type RolePage = Common.PaginatingQueryRecord<Role>;
+
+    type RoleList = Array<Role>;
+
+    type SystemUser = Common.CommonRecord<{
+      id: number;
+      username: string;
+      realName: string;
+      password: string;
+      userStatus: UserStatus;
+      contactInfo: string;
+      roleId: string;
+      roleName: string;
+      departmentId: string;
+      isAdmin: boolean;
+      departmentName: string;
+      expireDate: string;
+      createDate: string;
+    }>;
+
+    type SystemUserSearchParams = CommonType.RecordNullable<
+      Pick<
+        Api.SystemManage.SystemUser,
+        'id' | 'username' | 'realName' | 'userStatus' | 'roleId' | 'departmentId' | 'createDate'
+      > &
+        CommonSearchParams
+    >;
+
+    type SystemUserPage = Common.PaginatingQueryRecord<SystemUser>;
+
+    /**
+     * - "1": 正常
+     * - "2": 禁用
+     */
+    type UserStatus = '1' | '2';
   }
 }

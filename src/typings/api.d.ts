@@ -173,7 +173,7 @@ declare namespace Api {
       departmentId: string;
       isAdmin: boolean;
       departmentName: string;
-      expireDate: string;
+      expireDate: number;
       createDate: string;
     }>;
 

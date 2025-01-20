@@ -105,6 +105,12 @@ const {
       minWidth: 200
     },
     {
+      key: 'expireDate',
+      title: $t('page.manage.user.expireDate'),
+      align: 'center',
+      minWidth: 200
+    },
+    {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',

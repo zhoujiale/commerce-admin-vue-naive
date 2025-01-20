@@ -4,8 +4,10 @@ import type { SelectOption, TreeSelectOption } from 'naive-ui';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { addUser, fetchGetRoleList, getAllDepartmentList, getUser, updateUser } from '@/service/api/system-manage';
-import { convertToTreeSelectFormat } from '../../department/modules/departmentUtil';
-import { convertToSelectFormat } from '../../role/modules/roleUtil';
+import { convertToSelectFormat } from '@/views/manage/role/modules/roleUtil';
+import { convertToTreeSelectFormat } from '@/views/manage/department/modules/departmentUtil';
+import { md5Encode } from '@/utils/md5';
+import { formatTimestamp } from '@/utils/dateUtil';
 
 defineOptions({
   name: 'UserDrawer'
@@ -38,7 +40,7 @@ const title = computed(() => {
 });
 type Model = Pick<
   Api.SystemManage.SystemUser,
-  'username' | 'realName' | 'id' | 'password' | 'departmentId' | 'roleId' | 'userStatus'
+  'username' | 'realName' | 'id' | 'password' | 'departmentId' | 'roleId' | 'userStatus' | 'contactInfo' | 'expireDate'
 >;
 const model: Model = reactive(createDefaultModel());
 
@@ -50,7 +52,9 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
   departmentId: defaultRequiredRule,
   roleId: defaultRequiredRule,
   password: defaultRequiredRule,
-  userStatus: defaultRequiredRule
+  userStatus: defaultRequiredRule,
+  contactInfo: defaultRequiredRule,
+  expireDate: defaultRequiredRule
 };
 
 const departmentIdOptions = ref<TreeSelectOption[]>([]);
@@ -71,6 +75,7 @@ async function fetchGetAllRoles() {
   const { data } = await fetchGetRoleList(query);
   if (data !== null && data.total > 0) {
     roleIdOptions.value = convertToSelectFormat(data.records);
+    console.log(roleIdOptions.value);
   }
 }
 
@@ -89,7 +94,18 @@ async function handleSubmit() {
       window.$message?.success($t('common.updateSuccess'));
     }
   } else {
-    const addResponse = await addUser(model);
+    model.password = md5Encode(model.password);
+    const data = {
+      username: model.username,
+      password: md5Encode(model.password),
+      realName: model.realName,
+      departmentId: model.departmentId,
+      roleId: model.roleId,
+      contactInfo: model.contactInfo,
+      expireDate: formatTimestamp(model.expireDate),
+      userStatus: model.userStatus
+    };
+    const addResponse = await addUser(data);
     if (addResponse.response.data.code === 200) {
       window.$message?.success($t('common.addSuccess'));
     }
@@ -105,18 +121,26 @@ function createDefaultModel(): Model {
     password: '',
     departmentId: '',
     roleId: '',
-    userStatus: '1'
+    userStatus: '1',
+    expireDate: getNextMonth().getTime(),
+    contactInfo: ''
   };
 }
 function closeDrawer() {
   visible.value = false;
 }
+
+function getNextMonth() {
+  const now = new Date();
+  now.setMonth(now.getMonth() + 1);
+  return now;
+}
 watch(visible, () => {
   if (visible.value) {
     handleInitModel();
-    fetchGetAllDepartments();
-    fetchGetAllRoles();
     restoreValidation();
+    fetchGetAllRoles();
+    fetchGetAllDepartments();
   }
 });
 </script>
@@ -156,10 +180,29 @@ watch(visible, () => {
           clearable
         />
       </NFormItem>
+      <NFormItem :label="$t('page.manage.user.expireDate')" path="expireDate">
+        <NDatePicker
+          v-model:value="model.expireDate"
+          :placeholder="$t('page.manage.user.form.expire')"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          type="datetime"
+          clearable
+        />
+      </NFormItem>
+      <NFormItem :label="$t('page.manage.user.contactInfo')" path="contactInfo">
+        <NInput
+          v-model:value="model.contactInfo"
+          :placeholder="$t('page.manage.user.form.contactInfo')"
+          type="textarea"
+          :maxlength="20"
+          show-count
+          clearable
+        />
+      </NFormItem>
       <NFormItem :label="$t('page.manage.user.userStatus')" path="userStatus">
         <NRadioGroup v-model:value="model.userStatus">
-          <NRadio :value="true" :label="$t('common.commonStatus.normal')" />
-          <NRadio :value="false" :label="$t('common.commonStatus.forbidden')" />
+          <NRadio :value="1" :label="$t('common.commonStatus.normal')" />
+          <NRadio :value="2" :label="$t('common.commonStatus.forbidden')" />
         </NRadioGroup>
       </NFormItem>
       <template #footer>

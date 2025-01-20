@@ -330,7 +330,9 @@ const local: App.I18n.Schema = {
           userStatus: '请选择用户状态',
           departmentId: '请选择部门',
           roleId: '请选择角色',
-          createDate: '请选择时间'
+          createDate: '请选择时间',
+          expireDate: '请选择过期时间',
+          contactInfo: '请输入联系方式'
         },
         status: {
           normal: '正常',

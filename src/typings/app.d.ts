@@ -563,6 +563,8 @@ declare namespace App {
               departmentId: string;
               roleId: string;
               createDate: string;
+              expireDate: string;
+              contactInfo: string;
             };
             status: {
               normal: string;

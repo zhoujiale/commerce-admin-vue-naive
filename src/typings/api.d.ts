@@ -168,7 +168,7 @@ declare namespace Api {
       password: string;
       userStatus: UserStatus;
       contactInfo: string;
-      roleId: string;
+      roleId: string | any;
       roleName: string;
       departmentId: string;
       isAdmin: boolean;

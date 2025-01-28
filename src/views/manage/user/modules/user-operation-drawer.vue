@@ -1,5 +1,5 @@
 <script setup lang="tsx">
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import type { SelectOption, TreeSelectOption } from 'naive-ui';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
@@ -44,7 +44,10 @@ type Model = Pick<
 >;
 const model: Model = reactive(createDefaultModel());
 
-type RuleKey = Exclude<keyof Model, 'id'>;
+type RuleKey = Extract<
+  keyof Model,
+  'username' | 'realName' | 'departmentId' | 'roleId' | 'password' | 'userStatus' | 'contactInfo' | 'expireDate'
+>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   username: defaultRequiredRule,
@@ -59,6 +62,7 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 
 const departmentIdOptions = ref<TreeSelectOption[]>([]);
 const roleIdOptions = ref<SelectOption[]>([]);
+const changePassword = ref<boolean>(false);
 
 async function fetchGetAllDepartments() {
   const { data } = await getAllDepartmentList();
@@ -75,7 +79,6 @@ async function fetchGetAllRoles() {
   const { data } = await fetchGetRoleList(query);
   if (data !== null && data.total > 0) {
     roleIdOptions.value = convertToSelectFormat(data.records);
-    console.log(roleIdOptions.value);
   }
 }
 
@@ -83,18 +86,32 @@ async function handleInitModel() {
   Object.assign(model, createDefaultModel());
   if (props.operateType === 'edit' && props.rowData) {
     const userResponse = await getUser(props.rowData.id);
-    Object.assign(model, userResponse.data);
+    const data = userResponse.data;
+    if (data !== null) {
+      data.password = '********';
+    }
+    Object.assign(model, data);
   }
 }
 async function handleSubmit() {
   await validate();
   if (props.operateType === 'edit' && props.rowData) {
-    const editResponse = await updateUser(model.id, model);
+    const password = changePassword.value ? md5Encode(model.password) : '';
+    const data = {
+      username: model.username,
+      password,
+      realName: model.realName,
+      departmentId: model.departmentId,
+      roleId: model.roleId,
+      contactInfo: model.contactInfo,
+      expireDate: formatTimestamp(model.expireDate),
+      userStatus: model.userStatus
+    };
+    const editResponse = await updateUser(model.id, data);
     if (editResponse.response.data.code === 200) {
       window.$message?.success($t('common.updateSuccess'));
     }
   } else {
-    model.password = md5Encode(model.password);
     const data = {
       username: model.username,
       password: md5Encode(model.password),
@@ -120,7 +137,7 @@ function createDefaultModel(): Model {
     realName: '',
     password: '',
     departmentId: '',
-    roleId: '',
+    roleId: null,
     userStatus: '1',
     expireDate: getNextMonth().getTime(),
     contactInfo: ''
@@ -135,6 +152,11 @@ function getNextMonth() {
   now.setMonth(now.getMonth() + 1);
   return now;
 }
+
+function handlePasswordInput(value: string) {
+  changePassword.value = true;
+  model.password = value;
+}
 watch(visible, () => {
   if (visible.value) {
     handleInitModel();
@@ -142,6 +164,9 @@ watch(visible, () => {
     fetchGetAllRoles();
     fetchGetAllDepartments();
   }
+});
+onMounted(() => {
+  fetchGetAllRoles();
 });
 </script>
 
@@ -152,59 +177,60 @@ watch(visible, () => {
         <NFormItem :label="$t('page.manage.user.username')" path="username">
           <NInput v-model:value="model.username" :placeholder="$t('page.manage.user.form.username')" />
         </NFormItem>
+        <NFormItem :label="$t('page.manage.user.password')" path="password">
+          <NInput
+            v-model:value="model.password"
+            type="password"
+            show-password-on="mousedown"
+            :placeholder="$t('page.manage.user.form.password')"
+            @input="handlePasswordInput"
+          />
+        </NFormItem>
+        <NFormItem :label="$t('page.manage.user.realName')" path="realName">
+          <NInput v-model:value="model.realName" :placeholder="$t('page.manage.user.form.realName')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.manage.user.roleId')" path="roleId">
+          <NSelect
+            v-model:value="model.roleId"
+            :options="roleIdOptions"
+            :placeholder="$t('page.manage.user.form.roleId')"
+            clearable
+          />
+        </NFormItem>
+        <NFormItem :label="$t('page.manage.user.departmentId')" path="departmentId">
+          <NTreeSelect
+            v-model:value="model.departmentId"
+            :options="departmentIdOptions"
+            :placeholder="$t('page.manage.user.form.departmentId')"
+            clearable
+          />
+        </NFormItem>
+        <NFormItem :label="$t('page.manage.user.expireDate')" path="expireDate">
+          <NDatePicker
+            v-model:value="model.expireDate"
+            :placeholder="$t('page.manage.user.form.expire')"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            type="datetime"
+            clearable
+          />
+        </NFormItem>
+        <NFormItem :label="$t('page.manage.user.contactInfo')" path="contactInfo">
+          <NInput
+            v-model:value="model.contactInfo"
+            :placeholder="$t('page.manage.user.form.contactInfo')"
+            type="textarea"
+            :maxlength="20"
+            show-count
+            clearable
+          />
+        </NFormItem>
+        <NFormItem :label="$t('page.manage.user.userStatus')" path="userStatus">
+          <NRadioGroup v-model:value="model.userStatus">
+            <NRadio :value="1" :label="$t('common.commonStatus.normal')" />
+            <NRadio :value="2" :label="$t('common.commonStatus.forbidden')" />
+          </NRadioGroup>
+        </NFormItem>
       </NForm>
-      <NFormItem :label="$t('page.manage.user.password')" path="password">
-        <NInput
-          v-model:value="model.password"
-          type="password"
-          show-password-on="mousedown"
-          :placeholder="$t('page.manage.user.form.password')"
-        />
-      </NFormItem>
-      <NFormItem :label="$t('page.manage.user.realName')" path="realName">
-        <NInput v-model:value="model.realName" :placeholder="$t('page.manage.user.form.realName')" />
-      </NFormItem>
-      <NFormItem :label="$t('page.manage.user.departmentId')" path="departmentId">
-        <NTreeSelect
-          v-model:value="model.departmentId"
-          :options="departmentIdOptions"
-          :placeholder="$t('page.manage.user.form.departmentId')"
-          clearable
-        />
-      </NFormItem>
-      <NFormItem :label="$t('page.manage.user.roleId')" path="roleId">
-        <NSelect
-          v-model:value="model.roleId"
-          :options="roleIdOptions"
-          :placeholder="$t('page.manage.user.form.roleId')"
-          clearable
-        />
-      </NFormItem>
-      <NFormItem :label="$t('page.manage.user.expireDate')" path="expireDate">
-        <NDatePicker
-          v-model:value="model.expireDate"
-          :placeholder="$t('page.manage.user.form.expire')"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          type="datetime"
-          clearable
-        />
-      </NFormItem>
-      <NFormItem :label="$t('page.manage.user.contactInfo')" path="contactInfo">
-        <NInput
-          v-model:value="model.contactInfo"
-          :placeholder="$t('page.manage.user.form.contactInfo')"
-          type="textarea"
-          :maxlength="20"
-          show-count
-          clearable
-        />
-      </NFormItem>
-      <NFormItem :label="$t('page.manage.user.userStatus')" path="userStatus">
-        <NRadioGroup v-model:value="model.userStatus">
-          <NRadio :value="1" :label="$t('common.commonStatus.normal')" />
-          <NRadio :value="2" :label="$t('common.commonStatus.forbidden')" />
-        </NRadioGroup>
-      </NFormItem>
       <template #footer>
         <NSpace :size="16">
           <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>

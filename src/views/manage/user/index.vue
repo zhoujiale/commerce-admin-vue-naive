@@ -81,7 +81,7 @@ const {
       minWidth: 120,
       render: row => {
         const tagMap: Record<Api.SystemManage.UserStatus, NaiveUI.ThemeColor> = {
-          1: 'default',
+          1: 'success',
           2: 'warning'
         };
         const label = $t(userStatusRecord[row.userStatus]);
@@ -95,7 +95,11 @@ const {
       minWidth: 120,
       render: row => {
         const label = row.isAdmin ? '是' : '否';
-        return <NTag>{label}</NTag>;
+        const tagMap: Record<string, NaiveUI.ThemeColor> = {
+          是: 'success',
+          否: 'default'
+        };
+        return <NTag type={tagMap[label]}>{label}</NTag>;
       }
     },
     {

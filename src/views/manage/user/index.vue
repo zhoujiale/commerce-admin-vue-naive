@@ -121,14 +121,14 @@ const {
       width: 130,
       render: row => (
         <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+          <NButton type="primary" ghost size="small" onClick={() => edit(row.id)} disabled={row.isAdmin}>
             {$t('common.edit')}
           </NButton>
           <NPopconfirm onPositiveClick={() => handleDelete(row.id)}>
             {{
               default: () => $t('common.confirmDelete'),
               trigger: () => (
-                <NButton type="error" ghost size="small">
+                <NButton type="error" ghost size="small" disabled={row.isAdmin}>
                   {$t('common.delete')}
                 </NButton>
               )

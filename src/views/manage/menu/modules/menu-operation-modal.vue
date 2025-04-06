@@ -49,7 +49,18 @@ const title = computed(() => {
 
 type Model = Pick<
   Api.SystemManage.Menu,
-  'menuType' | 'menuName' | 'route' | 'sortNumber' | 'icon' | 'parentId' | 'isHide' | 'permissions'
+  | 'menuType'
+  | 'menuName'
+  | 'route'
+  | 'sortNumber'
+  | 'icon'
+  | 'localIcon'
+  | 'parentId'
+  | 'isHide'
+  | 'permissions'
+  | 'menuKey'
+  | 'component'
+  | 'in18nKey'
 > & {
   layout: string;
   page: string;
@@ -61,10 +72,14 @@ function createDefaultModel(): Model {
   return {
     menuType: '1',
     menuName: '',
+    menuKey: '',
     route: '',
+    component: '',
     layout: '',
     page: '',
     icon: '',
+    localIcon: '',
+    in18nKey: '',
     parentId: 0,
     sortNumber: 0,
     isHide: false,
@@ -72,10 +87,11 @@ function createDefaultModel(): Model {
   };
 }
 
-type RuleKey = Extract<keyof Model, 'menuName' | 'isHide' | 'route' | 'sortNumber' | 'parentId'>;
+type RuleKey = Extract<keyof Model, 'menuName' | 'menuKey' | 'isHide' | 'route' | 'sortNumber' | 'parentId'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   menuName: defaultRequiredRule,
+  menuKey: defaultRequiredRule,
   route: defaultRequiredRule,
   isHide: defaultRequiredRule,
   sortNumber: defaultRequiredRule,
@@ -233,8 +249,18 @@ watch(visible, () => {
           <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.menuName')" path="menuName">
             <NInput v-model:value="model.menuName" :placeholder="$t('page.manage.menu.form.menuName')" />
           </NFormItemGi>
+          <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.menuKey')" path="menuKey">
+            <NInput v-model:value="model.menuKey" :placeholder="$t('page.manage.menu.form.menuKey')" path="menuKey" />
+          </NFormItemGi>
           <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.route')" path="route">
             <NInput v-model:value="model.route" :placeholder="$t('page.manage.menu.form.route')" />
+          </NFormItemGi>
+          <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.component')" path="component">
+            <NInput
+              v-model:value="model.component"
+              :placeholder="$t('page.manage.menu.form.component')"
+              path="component"
+            />
           </NFormItemGi>
           <!--
  <NFormItemGi v-if="showLayout" span="24 m:12" :label="$t('page.manage.menu.layout')" path="layout">
@@ -274,6 +300,20 @@ watch(visible, () => {
                 <SvgIcon v-if="model.icon" :icon="model.icon" class="text-icon" />
               </template>
             </NInput>
+          </NFormItemGi>
+          <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.localIcon')" path="localIcon">
+            <NInput
+              v-model:value="model.localIcon"
+              :placeholder="$t('page.manage.menu.form.localIcon')"
+              path="localIcon"
+            />
+          </NFormItemGi>
+          <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.in18nKey')" path="in18nKey">
+            <NInput
+              v-model:value="model.in18nKey"
+              :placeholder="$t('page.manage.menu.form.in18nKey')"
+              path="in18nKey"
+            />
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.manage.menu.permissions')">
             <NDynamicInput

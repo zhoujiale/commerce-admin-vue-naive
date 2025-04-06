@@ -499,18 +499,26 @@ declare namespace App {
             addChildMenu: string;
             editMenu: string;
             menuName: string;
+            menuKey: string;
             menuType: string;
             icon: string;
+            localIcon: string;
             route: string;
+            component: string;
+            in18nKey: string;
             sortNumber: string;
             isHide: string;
             parentId: string;
             permissions: string;
             form: {
               menuName: string;
+              menuKey: string;
               menuType: string;
               icon: string;
+              localIcon: string;
               route: string;
+              component: string;
+              in18nKey: string;
               sortNumber: string;
               isHide: string;
               parentId: string;

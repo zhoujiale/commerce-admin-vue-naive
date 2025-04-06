@@ -267,9 +267,13 @@ const local: App.I18n.Schema = {
         addChildMenu: '新增子菜单',
         editMenu: '编辑菜单',
         menuName: '菜单名称',
+        menuKey: '菜单key',
         menuType: '菜单类型',
         icon: '图标',
+        localIcon: '本地图标',
         route: '路由',
+        component: '组件',
+        in18nKey: 'in18n',
         sortNumber: '序号',
         isHide: '是否隐藏',
         parentId: '父级菜单',
@@ -277,12 +281,16 @@ const local: App.I18n.Schema = {
         form: {
           menuName: '请输入菜单名称',
           menuType: '请选择菜单类型',
+          menuKey: '请输入菜单key',
           icon: '请选择图标',
+          localIcon: '请选择本地图标',
           route: '请输入路由',
+          component: '请输入组件',
           sortNumber: '请输入序号',
           isHide: '请选择是否隐藏',
           parentId: '请选择父级菜单ID',
-          permissions: '请输入权限路由'
+          permissions: '请输入权限路由',
+          in18nKey: '请输入in18n'
         },
         type: {
           directory: '目录',

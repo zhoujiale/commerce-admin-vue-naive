@@ -128,9 +128,13 @@ declare namespace Api {
     type Menu = Common.CommonRecord<{
       id: number;
       menuName: string;
+      menuKey: string;
       menuType: MenuType;
       parentId: number;
       icon: string;
+      localIcon: string;
+      component: string;
+      in18nKey: string;
       route: string;
       sortNumber: number;
       permissions: string[];

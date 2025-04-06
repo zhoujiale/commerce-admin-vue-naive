@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import './plugins/assets';
+import { useAuthStore } from '@/store/modules/auth';
 import { setupAppVersionNotification, setupDayjs, setupIconifyOffline, setupLoading, setupNProgress } from './plugins';
 import { setupStore } from './store';
 import { setupRouter } from './router';
@@ -24,6 +25,20 @@ async function setupApp() {
   setupI18n(app);
 
   setupAppVersionNotification();
+
+  app.directive('permission', {
+    mounted(el, binding) {
+      const admin = useAuthStore().userInfo.isAdmin;
+      if (admin) {
+        return;
+      }
+      const permissions: string[] = useAuthStore().userInfo.permissions;
+      const hasPermission = permissions.includes(binding.value);
+      if (!hasPermission && el.parentNode) {
+        el.parentNode.removeChild(el);
+      }
+    }
+  });
 
   app.mount('#app');
 }

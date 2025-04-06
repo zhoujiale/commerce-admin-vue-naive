@@ -26,7 +26,8 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     roles: [],
     permissions: [],
     departmentId: '',
-    departmentName: ''
+    departmentName: '',
+    isAdmin: false
   });
 
   /** is super role in static route */

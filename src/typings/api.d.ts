@@ -70,6 +70,7 @@ declare namespace Api {
       permissions: string[];
       departmentId: string;
       departmentName: string;
+      isAdmin: boolean;
     }
   }
 

@@ -121,7 +121,14 @@ const {
       width: 130,
       render: row => (
         <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => edit(row.id)} disabled={row.isAdmin}>
+          <NButton
+            v-permission="'/systeUser/modify/{id}'"
+            type="primary"
+            ghost
+            size="small"
+            onClick={() => edit(row.id)}
+            disabled={row.isAdmin}
+          >
             {$t('common.edit')}
           </NButton>
           <NPopconfirm onPositiveClick={() => handleDelete(row.id)}>

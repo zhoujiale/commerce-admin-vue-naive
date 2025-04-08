@@ -58,10 +58,16 @@ const {
       width: 130,
       render: row => (
         <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+          <NButton
+            v-permission="'/sysDepartment/modify/{id}'"
+            type="primary"
+            ghost
+            size="small"
+            onClick={() => edit(row.id)}
+          >
             {$t('common.edit')}
           </NButton>
-          <NPopconfirm onPositiveClick={() => handleDelete(row.id)}>
+          <NPopconfirm v-permission="'/sysDepartment/delete/{id}'" onPositiveClick={() => handleDelete(row.id)}>
             {{
               default: () => $t('common.confirmDelete'),
               trigger: () => (

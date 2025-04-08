@@ -344,7 +344,9 @@ watch(visible, () => {
     <template #footer>
       <NSpace justify="end" :size="16">
         <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>
-        <NButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</NButton>
+        <NButton v-permission="'/sysMenu/add || /sysMenu/modify/{id}'" type="primary" @click="handleSubmit">
+          {{ $t('common.confirm') }}
+        </NButton>
       </NSpace>
     </template>
   </NModal>

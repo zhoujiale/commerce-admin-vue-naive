@@ -33,7 +33,9 @@ async function setupApp() {
         return;
       }
       const permissions: string[] = useAuthStore().userInfo.permissions;
-      const hasPermission = permissions.includes(binding.value);
+      const str = binding.value as string;
+      const expectPermissions: string[] = str.split('||');
+      const hasPermission = expectPermissions.some(permission => permissions.includes(permission.trim()));
       if (!hasPermission && el.parentNode) {
         el.parentNode.removeChild(el);
       }

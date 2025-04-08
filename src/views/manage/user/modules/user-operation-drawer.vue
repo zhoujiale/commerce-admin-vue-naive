@@ -234,7 +234,9 @@ onMounted(() => {
       <template #footer>
         <NSpace :size="16">
           <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>
-          <NButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</NButton>
+          <NButton v-premisson="'/sysUser/add || /sysUser/modify/{id}'" type="primary" @click="handleSubmit">
+            {{ $t('common.confirm') }}
+          </NButton>
         </NSpace>
       </template>
     </NDrawerContent>

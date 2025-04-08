@@ -107,14 +107,26 @@ const { columns, columnChecks, loading, data, getData, getDataByPage } = useTabl
       render: row => (
         <div class="flex-center justify-end gap-8px">
           {row.menuType === '1' && (
-            <NButton type="primary" ghost size="small" onClick={() => handleAddChildMenu(row)}>
+            <NButton
+              v-permission="'/sysMenu/add'"
+              type="primary"
+              ghost
+              size="small"
+              onClick={() => handleAddChildMenu(row)}
+            >
               {$t('page.manage.menu.addChildMenu')}
             </NButton>
           )}
-          <NButton type="primary" ghost size="small" onClick={() => handleEdit(row)}>
+          <NButton
+            v-permission="'/sysMenu/modify/{id}'"
+            type="primary"
+            ghost
+            size="small"
+            onClick={() => handleEdit(row)}
+          >
             {$t('common.edit')}
           </NButton>
-          <NPopconfirm onPositiveClick={() => handleDelete(row.id)}>
+          <NPopconfirm v-permission="'/sysMenu/delete/{id}'" onPositiveClick={() => handleDelete(row.id)}>
             {{
               default: () => $t('common.confirmDelete'),
               trigger: () => (

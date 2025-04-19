@@ -72,6 +72,11 @@ declare namespace Api {
       departmentName: string;
       isAdmin: boolean;
     }
+
+    interface UpdatePassword {
+      password: string;
+      confirmPassword: string;
+    }
   }
 
   /**

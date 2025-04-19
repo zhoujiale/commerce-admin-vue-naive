@@ -46,3 +46,11 @@ export function fetchRefreshToken(refreshToken: string) {
 export function fetchCustomBackendError(code: string, msg: string) {
   return request({ url: '/auth/error', params: { code, msg } });
 }
+
+export function updatePassword(data: any) {
+  return request<Api.Common.CommonOperation>({
+    url: '/auth/updatePassword',
+    method: 'put',
+    data
+  });
+}

@@ -5,6 +5,7 @@ import { useAuthStore } from '@/store/modules/auth';
 import { useRouterPush } from '@/hooks/common/router';
 import { useSvgIcon } from '@/hooks/common/icon';
 import { $t } from '@/locales';
+import { useBoolean } from '~/packages/hooks/src';
 
 defineOptions({
   name: 'UserAvatar'
@@ -13,12 +14,13 @@ defineOptions({
 const authStore = useAuthStore();
 const { routerPushByKey, toLogin } = useRouterPush();
 const { SvgIconVNode } = useSvgIcon();
+const { bool: visible, setTrue: openModal } = useBoolean();
 
 function loginOrRegister() {
   toLogin();
 }
 
-type DropdownKey = 'logout';
+type DropdownKey = 'logout' | 'updatePassword';
 
 type DropdownOption =
   | {
@@ -33,6 +35,11 @@ type DropdownOption =
 
 const options = computed(() => {
   const opts: DropdownOption[] = [
+    {
+      label: $t('common.updatePassword'),
+      key: 'updatePassword',
+      icon: SvgIconVNode({ icon: 'solar:lock-password-linear', fontSize: 18 })
+    },
     {
       label: $t('common.logout'),
       key: 'logout',
@@ -58,6 +65,8 @@ function logout() {
 function handleDropdown(key: DropdownKey) {
   if (key === 'logout') {
     logout();
+  } else if (key === 'updatePassword') {
+    openModal();
   } else {
     // If your other options are jumps from other routes, they will be directly supported here
     routerPushByKey(key);
@@ -77,6 +86,7 @@ function handleDropdown(key: DropdownKey) {
       </ButtonIcon>
     </div>
   </NDropdown>
+  <UpdatePassword v-model:visible="visible" />
 </template>
 
 <style scoped></style>

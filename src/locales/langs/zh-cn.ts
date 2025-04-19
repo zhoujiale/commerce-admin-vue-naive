@@ -28,6 +28,7 @@ const local: App.I18n.Schema = {
     index: '序号',
     keywordSearch: '请输入关键词搜索',
     logout: '退出登录',
+    updatePassword: '修改密码',
     logoutConfirm: '确认退出登录吗？',
     lookForward: '敬请期待',
     modify: '修改',

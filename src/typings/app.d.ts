@@ -311,6 +311,7 @@ declare namespace App {
         index: string;
         keywordSearch: string;
         logout: string;
+        updatePassword: string;
         logoutConfirm: string;
         lookForward: string;
         modify: string;

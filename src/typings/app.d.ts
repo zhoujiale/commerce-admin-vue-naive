@@ -580,6 +580,22 @@ declare namespace App {
               forbidden: string;
             };
           };
+          log: {
+            title: string;
+            operation: string;
+            username: string;
+            roleName: string;
+            departmentName: string;
+            ipAddress: string;
+            response: string;
+            requestParams: string;
+            createDate: string;
+            form: {
+              username: string;
+              departmentId: string;
+              createDate: string;
+            };
+          };
         };
       };
       form: {

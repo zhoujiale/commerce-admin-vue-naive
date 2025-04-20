@@ -173,3 +173,20 @@ export function deleteUser(id: number) {
     method: 'delete'
   });
 }
+
+/** 日志列表 */
+export function fetchGetLogList(params?: Api.SystemManage.SystemLogSearchParams) {
+  return request<Api.SystemManage.SystemLogPage>({
+    url: '/systemLog/pages',
+    method: 'get',
+    params
+  });
+}
+
+/** 删除日志 */
+export function deleteLog(id: number) {
+  return request<Api.Common.CommonOperation>({
+    url: `/systemLog/delete/${id}`,
+    method: 'delete'
+  });
+}

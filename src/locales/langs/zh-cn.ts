@@ -169,7 +169,8 @@ const local: App.I18n.Schema = {
     manage_department: '部门管理',
     manage_menu: '菜单管理',
     manage_role: '角色管理',
-    manage_user: '用户管理'
+    manage_user: '用户管理',
+    manage_log: '日志管理'
   },
   page: {
     login: {
@@ -346,6 +347,22 @@ const local: App.I18n.Schema = {
         status: {
           normal: '正常',
           forbidden: '禁用'
+        }
+      },
+      log: {
+        title: '日志列表',
+        operation: '行为',
+        username: '用户名',
+        roleName: '角色',
+        departmentName: '部门',
+        ipAddress: 'IP',
+        response: '响应状态',
+        requestParams: '请求参数',
+        createDate: '请求时间',
+        form: {
+          username: '请输入用户名',
+          departmentId: '请选择部门',
+          createDate: '请选择请求时间'
         }
       }
     }

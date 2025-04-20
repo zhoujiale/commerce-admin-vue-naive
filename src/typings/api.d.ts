@@ -183,7 +183,7 @@ declare namespace Api {
       departmentId: string;
       isAdmin: boolean;
       departmentName: string;
-      expireDate: number;
+      expireDate: string;
       createDate: string;
     }>;
 
@@ -202,5 +202,26 @@ declare namespace Api {
      * - "2": 禁用
      */
     type UserStatus = '1' | '2';
+
+    type SystemLog = Common.CommonRecord<{
+      id: number;
+      userId: number;
+      username: string;
+      roleId: number;
+      roleName: string;
+      departmentId: number;
+      departmentName: string;
+      operation: string;
+      ipAddress: string;
+      response: string;
+      requestParams: string;
+      createDate: string;
+    }>;
+
+    type SystemLogPage = Common.PaginatingQueryRecord<SystemLog>;
+
+    type SystemLogSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.SystemLog, 'username' | 'departmentId'> & CommonSearchParams
+    >;
   }
 }

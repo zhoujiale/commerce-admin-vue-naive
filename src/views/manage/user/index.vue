@@ -5,6 +5,7 @@ import { useTable, useTableOperate } from '@/hooks/common/table';
 import { deleteUser, fetchGetSystemUserList } from '@/service/api/system-manage';
 import { $t } from '@/locales';
 import { userStatusRecord } from '@/constants/business';
+import { formatTimestamp } from '@/utils/dateUtil';
 import UserSerach from './modules/user-serach.vue';
 import UserDrawer from './modules/user-operation-drawer.vue';
 
@@ -21,14 +22,15 @@ const {
   getData,
   mobilePagination
 } = useTable({
-  apiFn: fetchGetSystemUserList,
+  apiFn: querySystemUserList,
   apiParams: {
     current: 1,
     size: 10,
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
     username: null,
-    realName: null
+    realName: null,
+    timeRange: null
   },
   columns: () => [
     {
@@ -148,6 +150,15 @@ const {
 });
 const { drawerVisible, operateType, editingData, handleAdd, handleEdit, checkedRowKeys, onBatchDeleted, onDeleted } =
   useTableOperate(data, getData);
+
+async function querySystemUserList(params?: Api.SystemManage.SystemUserSearchParams) {
+  const timeRange = params?.timeRange;
+  if (params !== null && undefined !== params && timeRange !== null && undefined !== timeRange) {
+    params.startTime = formatTimestamp(timeRange[0]);
+    params.endTime = formatTimestamp(timeRange[1]);
+  }
+  return await fetchGetSystemUserList(params);
+}
 
 async function handleBatchDelete() {
   // request

@@ -113,7 +113,12 @@ onMounted(() => {
               path="createDate"
               class="pr-24px"
             >
-              <NDatePicker :placeholder="$t('page.manage.user.form.createDate')" type="datetimerange" clearable />
+              <NDatePicker
+                v-model:value="model.timeRange"
+                :placeholder="$t('page.manage.user.form.createDate')"
+                type="datetimerange"
+                clearable
+              />
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:18">
               <NSpace class="w-full" justify="end">

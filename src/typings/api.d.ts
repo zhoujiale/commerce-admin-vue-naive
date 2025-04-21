@@ -99,7 +99,11 @@ declare namespace Api {
 
   /** 系统管理 */
   namespace SystemManage {
-    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
+    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'> & {
+      timeRange?: [number, number];
+      startTime?: string;
+      endTime?: string;
+    };
 
     type Department = Common.CommonRecord<{
       id: number;

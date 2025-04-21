@@ -4,6 +4,7 @@ import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
 import { deleteLog, fetchGetLogList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
+import { formatTimestamp } from '@/utils/dateUtil';
 import LogSearch from './modules/log-search.vue';
 
 const appStore = useAppStore();
@@ -19,10 +20,13 @@ const {
   searchParams,
   resetSearchParams
 } = useTable({
-  apiFn: fetchGetLogList,
+  apiFn: queryLogList,
   apiParams: {
     current: 1,
-    size: 10
+    size: 10,
+    departmentId: null,
+    username: null,
+    timeRange: null
   },
   columns: () => [
     {
@@ -101,6 +105,15 @@ const {
   onDeleted
   // closeDrawer
 } = useTableOperate(data, getData);
+
+async function queryLogList(params?: Api.SystemManage.SystemLogSearchParams) {
+  const timeRange = params?.timeRange;
+  if (params !== null && undefined !== params && timeRange !== null && undefined !== timeRange) {
+    params.startTime = formatTimestamp(timeRange[0]);
+    params.endTime = formatTimestamp(timeRange[1]);
+  }
+  return await fetchGetLogList(params);
+}
 
 async function handleDelete(id: number) {
   // request

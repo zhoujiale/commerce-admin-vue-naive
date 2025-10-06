@@ -596,6 +596,34 @@ declare namespace App {
               createDate: string;
             };
           };
+          dict: {
+            title: string;
+            dictKey: string;
+            dictName: string;
+            hasChildren: string;
+            addDict: string;
+            editDict: string;
+            dictValue: string;
+            form: {
+              dictKey: string;
+              dictName: string;
+            };
+          };
+          dictdata: {
+            title: string;
+            dictId: string;
+            dictData: string;
+            dictDataName: string;
+            dictName: string;
+            sortNumber: string;
+            form: {
+              dictId: string;
+              dictData: string;
+              dictDataName: string;
+              dictName: string;
+              sortNumber: string;
+            };
+          }
         };
       };
       form: {

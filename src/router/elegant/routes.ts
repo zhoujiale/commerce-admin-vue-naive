@@ -95,6 +95,26 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'manage_dict',
+        path: '/manage/dict',
+        component: 'view.manage_dict',
+        meta: {
+          title: 'manage_dict',
+          i18nKey: 'route.manage_dict'
+        }
+      },
+      {
+        name: 'manage_dictdata',
+        path: '/manage/dictdata',
+        component: 'view.manage_dictdata',
+        meta: {
+          title: 'manage_dictdata',
+          i18nKey: 'route.manage_dictdata',
+          hideInMenu: true,
+          multiTab: true
+        }
+      },
+      {
         name: 'manage_log',
         path: '/manage/log',
         component: 'view.manage_log',

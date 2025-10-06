@@ -1,3 +1,4 @@
+import { Api } from '@/typings/api';
 import { request } from '../request';
 
 /** 获取部门列表 */
@@ -187,6 +188,75 @@ export function fetchGetLogList(params?: Api.SystemManage.SystemLogSearchParams)
 export function deleteLog(id: number) {
   return request<Api.Common.CommonOperation>({
     url: `/systemLog/delete/${id}`,
+    method: 'delete'
+  });
+}
+
+/** 字典查询  */
+export function fetchGetDictList(params?: Api.SystemManage.SysDictSearchParams) {
+  return request<Api.SystemManage.SysDictPage>({
+    url: '/systemDict/pages',
+    method: 'get',
+    params
+  });
+}
+
+/** 字典添加 */
+export function addDict(data: any) {
+  return request<Api.Common.CommonOperation>({
+    url: '/systemDict/add',
+    method: 'post',
+    data
+  });
+}
+/** 字典编辑 */
+export function updateDict(id: number, data: any) {
+  return request<Api.Common.CommonOperation>({
+    url: `/systemDict/modify/${id}`,
+    method: 'put',
+    data
+  });
+}
+
+/** 字典删除 */
+export function deleteDict(id: number) {
+  return request<Api.Common.CommonOperation>({
+    url: `/systemDict/delete/${id}`,
+    method: 'delete'
+  });
+}
+
+/** 字典项查询 */
+export function fetchGetDictItemList(id: number,params?: Api.SystemManage.SysDictDataSearchParams) {
+  return request<Api.SystemManage.SysDictItemPage>({
+    url: `/systemDict/data/pages/${id}`,
+    method: 'get',
+    params
+  });
+}
+
+/** 字典项添加 */
+export function addDictItem(data: Api.SystemManage.SysDictData) {
+  return request<Api.Common.CommonOperation>({
+    url: '/systemDict/addData',
+    method: 'post',
+    data
+  });
+}
+
+/** 字典项编辑 */
+export function updateDictItem(id: number, data: Api.SystemManage.SysDictData) {
+  return request<Api.Common.CommonOperation>({
+    url: `/systemDict/modifyData/${id}`,
+    method: 'put',
+    data
+  });
+}
+
+/** 字典项删除 */
+export function deleteDictItem(id: number) {
+  return request<Api.Common.CommonOperation>({
+    url: `/systemDict/deleteData/${id}`,
     method: 'delete'
   });
 }

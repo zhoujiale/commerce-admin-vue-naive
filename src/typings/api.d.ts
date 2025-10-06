@@ -1,3 +1,5 @@
+import { S } from 'vite/dist/node/types.d-aGj9QkWt';
+
 /**
  * Namespace Api
  *
@@ -227,5 +229,33 @@ declare namespace Api {
     type SystemLogSearchParams = CommonType.RecordNullable<
       Pick<Api.SystemManage.SystemLog, 'username' | 'departmentId'> & CommonSearchParams
     >;
+
+    /**字典 */
+    type SysDict = Common.CommonRecord<{
+      id: number;
+      dictKey: string;
+      dictName: string;
+      hasChildren: boolean;
+    }>
+    type SysDictSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.SysDict, 'dictKey' | 'dictName'> & CommonSearchParams
+    >;
+
+    type SysDictPage = Common.PaginatingQueryRecord<SysDict>;
+
+    /**字典项 */
+    type SysDictData = Common.CommonRecord<{
+      id: number;
+      dictId: number;
+      dictDataName: string;
+      dictData: string;
+      sortNumber: number;
+    }>
+
+    type SysDictDataSearchParams = CommonType.RecordNullable<
+    Pick<Api.SystemManage.SysDictData, 'dictDataName' | 'dictData'> &
+      CommonSearchParams
+    >;
+    type SysDictItemPage = Common.PaginatingQueryRecord<SysDictData>;
   }
 }

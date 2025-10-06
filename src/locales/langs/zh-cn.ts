@@ -170,7 +170,9 @@ const local: App.I18n.Schema = {
     manage_menu: '菜单管理',
     manage_role: '角色管理',
     manage_user: '用户管理',
-    manage_log: '日志管理'
+    manage_log: '日志管理',
+    manage_dict: '字典管理',
+    manage_dictdata: "字典项管理"
   },
   page: {
     login: {
@@ -363,6 +365,34 @@ const local: App.I18n.Schema = {
           username: '请输入用户名',
           departmentId: '请选择部门',
           createDate: '请选择请求时间'
+        }
+      },
+      dict: {
+        title: '字典管理',
+        dictKey: "字典Key",
+        dictName: "字典名称",
+        hasChildren: "是否有子集",
+        form: {
+          dictKey: "字典Key",
+          dictName: "字典名称"
+        },
+        addDict: "添加字典",
+        editDict: "修改字典",
+        dictValue: "字典值"
+      },
+      dictdata: {
+        title: "字典项管理",
+        dictId: "字典ID",
+        dictData: "字典项值",
+        dictDataName: "字典项名称",
+        dictName: "字典名称",
+        sortNumber: "序号",
+        form: {
+          dictId: "字典ID",
+          dictData: "字典数据",
+          dictDataName: "字典数据名称",
+          sortNumber: "序号",
+          dictName: "字典名称"
         }
       }
     }

@@ -1,3 +1,4 @@
+import { Api } from '@/typings/api';
 import { request } from '../request';
 
 /** get constant routes */

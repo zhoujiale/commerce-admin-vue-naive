@@ -7,6 +7,7 @@ import { menuTypeOptions } from '@/constants/business';
 import SvgIcon from '@/components/custom/svg-icon.vue';
 import { addMenu, editMenu, fetchGetMenuListByType } from '@/service/api/system-manage';
 import { convertToSelectFormat } from './menuUtil';
+import { Api } from '@/typings/api';
 
 defineOptions({
   name: 'MenuOperateModal'

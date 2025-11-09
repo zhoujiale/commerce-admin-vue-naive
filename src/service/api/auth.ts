@@ -55,3 +55,10 @@ export function updatePassword(data: any) {
     data
   });
 }
+
+export function fetchGetUserRoutes() {
+  return request<Api.Route.UserRoute>({
+    url: '/auth/getUserRoutes',
+    method: 'get'
+  });
+}

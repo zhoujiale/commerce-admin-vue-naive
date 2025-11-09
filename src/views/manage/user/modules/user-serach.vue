@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 import { fetchGetRoleList, getAllDepartmentList } from '@/service/api';
 import { convertToSelectFormat } from '@/views/manage/role/modules/roleUtil';
 import { convertToTreeSelectFormat } from '@/views/manage/department/modules/departmentUtil';
+import { Api } from '@/typings/api';
 
 defineOptions({
   name: 'UserSearch'

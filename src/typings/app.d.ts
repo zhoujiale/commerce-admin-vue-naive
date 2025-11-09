@@ -625,6 +625,22 @@ declare namespace App {
             };
           }
         };
+        operation: {
+          msgtemplate: {
+            title: string;
+            templateName: string;
+            templateTitle: string;
+            templateContent: string;
+            keyword: string;
+            addTemplate: string;
+            editTemplate: string;
+            form: {
+              templateName: string;
+              templateTitle: string;
+              templateContent: string;
+            }
+          }
+        }
       };
       form: {
         required: string;

@@ -4,6 +4,7 @@
 // Read more: https://github.com/soybeanjs/elegant-router
 
 import type { GeneratedRoute } from '@elegant-router/types';
+import { c } from 'naive-ui';
 import path from 'node:path';
 
 export const generatedRoutes: GeneratedRoute[] = [
@@ -148,6 +149,26 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'manage_user',
           i18nKey: 'route.manage_user'
+        }
+      }
+    ]
+  },
+  {
+    name: 'operation',
+    path: '/operation',
+    component: 'layout.base',
+    meta: {
+      title: 'operation',
+      i18nKey: 'route.operation'
+    },
+    children: [
+      {
+        name: 'operation_msgtemplate',
+        path: '/operation/msgtemplate',
+        component: 'view.operation_msgtemplate',
+        meta: {
+          title: 'operation_msgtemplate',
+          i18nKey: 'route.operation_msgtemplate'
         }
       }
     ]

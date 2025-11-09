@@ -8,7 +8,8 @@ import { router } from '@/router';
 import { createStaticRoutes, getAuthVueRoutes } from '@/router/routes';
 import { ROOT_ROUTE } from '@/router/routes/builtin';
 import { getRouteName, getRoutePath } from '@/router/elegant/transform';
-import { fetchGetConstantRoutes, fetchGetUserRoutes, fetchIsRouteExist } from '@/service/api';
+import { fetchGetConstantRoutes, fetchIsRouteExist } from '@/service/api';
+import { fetchGetUserRoutes } from '@/service/api/auth';
 import { useAuthStore } from '../auth';
 import { useTabStore } from '../tab';
 import {

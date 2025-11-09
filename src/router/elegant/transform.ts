@@ -176,7 +176,9 @@ const routeMap: RouteMap = {
   "manage_log": "/manage/log",
   "manage_menu": "/manage/menu",
   "manage_role": "/manage/role",
-  "manage_user": "/manage/user"
+  "manage_user": "/manage/user",
+  "operation": "/operation",
+  "operation_msgtemplate": "/operation/msgtemplate"
 };
 
 /**

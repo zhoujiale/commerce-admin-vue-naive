@@ -12,6 +12,7 @@ import SvgIcon from '@/components/custom/svg-icon.vue';
 import { yesOrNoRecord } from '@/constants/common';
 import MenuOperationModal from './modules/menu-operation-modal.vue';
 import type { OperateType } from './modules/menu-operation-modal.vue';
+import { Api } from '@/typings/api';
 
 const appStore = useAppStore();
 const { bool: visible, setTrue: openModal } = useBoolean();

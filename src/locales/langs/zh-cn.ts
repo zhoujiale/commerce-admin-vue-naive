@@ -172,7 +172,9 @@ const local: App.I18n.Schema = {
     manage_user: '用户管理',
     manage_log: '日志管理',
     manage_dict: '字典管理',
-    manage_dictdata: "字典项管理"
+    manage_dictdata: "字典项管理",
+    operation_msgtemplate: "消息模板管理",
+    operation: ""
   },
   page: {
     login: {
@@ -393,6 +395,22 @@ const local: App.I18n.Schema = {
           dictDataName: "字典数据名称",
           sortNumber: "序号",
           dictName: "字典名称"
+        }
+      }
+    },
+    operation: {
+      msgtemplate: {
+        title: "消息模板管理",
+        templateName: "模板名称",
+        templateTitle: "模板标题",
+        templateContent: "模板内容",
+        keyword: "关键字",
+        addTemplate: "添加模板",
+        editTemplate: "编辑模板",
+        form: {
+          templateName: "请输入模板名称",
+          templateTitle: "请输入模板标题",
+          templateContent: "请输入模板内容"
         }
       }
     }

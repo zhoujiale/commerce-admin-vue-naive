@@ -258,4 +258,21 @@ declare namespace Api {
     >;
     type SysDictItemPage = Common.PaginatingQueryRecord<SysDictData>;
   }
+
+  /** 运营 */
+  namespace Operation {
+    type MsgTemplate = Common.CommonRecord<{
+      id: number;
+      templateName: string;
+      templateTitle: string;
+      templateContent: string;
+      createDate: string;
+    }>;
+
+    type MsgTemplateSearchParams = CommonType.RecordNullable<
+      Pick<Api.Operation.MsgTemplate, 'templateName' | 'templateTitle'> & {'keyword'?: string} & Api.Common.CommonSearchParams
+    >;
+
+    type MsgTemplatePage = Common.PaginatingQueryRecord<MsgTemplate>;
+  }
 }
